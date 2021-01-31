@@ -3,7 +3,6 @@ from datetime import datetime
 from datetime import timedelta
 from config.configConstants import JWTConstants
 
-
 class JwtTokenHelper:
     # JWT access token generation
     def JWTAccessToken(self, user_id):

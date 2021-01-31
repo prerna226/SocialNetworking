@@ -47,6 +47,7 @@ class UserPosts(APIView):
                 media=request.data['media'],
                 user_id=User.objects.get(user_id=user_id)
             )
+            
             return Response({'message': Messages.POST_CREATED}, status=status.HTTP_200_OK)
         except Exception as e:
             print('...................post created exception........',str(e))
