@@ -1,4 +1,4 @@
-"""social_netwoking URL Configuration
+"""social_networking URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -14,8 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('v1/',include('user_auth.urls')),
+    path('v1/',include('user_post.urls'))
+
 ]

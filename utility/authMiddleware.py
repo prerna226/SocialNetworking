@@ -4,7 +4,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from config.configConstants import JWTConstants
 from config.messages import Messages
-from auth_user.models import (User,Device)
+from user_auth.models import (User,Device)
 
 
 # This function is used to authenticate after login

@@ -1,5 +1,5 @@
 from django.db import models
-from auth_user.models import User
+from user_auth.models import User
 from jsonfield import JSONField
 
 # Create your models here.

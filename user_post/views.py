@@ -9,7 +9,7 @@ from utility.authMiddleware import isAuthenticate
 from utility.requestErrorFormate import requestErrorMessagesFormate
 from utility.jwtTokenHelper import JwtTokenHelper
 from utility.sqlQueryBuilder import SqlQueryBuilder
-from auth_user.models import(User)
+from user_auth.models import(User)
 from .models import (Post,PostComment,PostReaction)
 from config.messages import Messages
 from django.views.decorators.csrf import csrf_exempt
