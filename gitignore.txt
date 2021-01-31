@@ -1,0 +1,12 @@
+/env/
+__pycache__/
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
+/.vscode
+/.vs
+.idea/
+/node_modules/
+package-lock.json
+/.serverless
+
