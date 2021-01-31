@@ -79,8 +79,8 @@ def sign_in(request):
         schema = {
             "email": {'type': 'string', 'required': True, 'empty': False},
             "password": {'type': 'string', 'required': True, 'empty': False},
-            "deviceToken": {'type': 'string', 'required': True, 'empty': False},
-            "deviceType": {'type': 'integer', 'required': True, 'nullable': False},
+            "device_token": {'type': 'string', 'required': True, 'empty': False},
+            "device_type": {'type': 'integer', 'required': True, 'nullable': False},
             
         }
         v = Validator()
