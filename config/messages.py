@@ -16,4 +16,4 @@ class Messages():
     CAN_NOT_EDIT_POST = "You do not have permission to edit the post"
     POST_UPDATED = "Post updated"
     PASSWORD_OR_EMAIL_INCORRECT = "Email/password is incorrect"
-    EMAIL_EXIST = "Email already exist"
+    EMAIL_EXISTS = "Email already exist"

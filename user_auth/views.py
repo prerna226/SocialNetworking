@@ -8,6 +8,7 @@ from django.utils.decorators import method_decorator
 from utility.authMiddleware import isAuthenticate
 from utility.jwtTokenHelper import JwtTokenHelper
 from utility.passwordHashing import PasswordHashing
+from config.messages import Messages
 from .models import (User,Device)
 from utility.requestErrorFormate import requestErrorMessagesFormate
 from django.views.decorators.csrf import csrf_exempt
@@ -23,13 +24,13 @@ def sign_up(request):
         schema = {
             "first_name": {'type': 'string', 'required': True, 'empty': False},
             "last_name": {'type': 'string', 'required': True, 'empty': False},
-            "email": {'isEmail': True, 'type': 'string', 'required': True, 'empty':False},
+            "email": {'type': 'string', 'required': True, 'empty':False},
             "password": {'type': 'string', 'required': True, 'empty': True},
             "device_token": {'type': 'string', 'required': True, 'empty': False},
             "device_type": {'type': 'integer', 'required': True, 'nullable': False}
         }
 
-        v = CustomValidator()
+        v = Validator()
         if not v.validate(request.data, schema):
             return Response(requestErrorMessagesFormate(v.errors), status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:
@@ -55,7 +56,7 @@ def sign_up(request):
             )
             user_info = User.objects.filter(email=request.data['email']).values()
             
-            token_data = access_refresh_token(userInfo[0]['user_id'])
+            token_data = access_refresh_token(user_info[0]['user_id'])
             
             # insert data in device table
             Device.objects.create(
@@ -95,18 +96,20 @@ def sign_in(request):
         user_information = User.objects.filter(email=request.data['email']).values()
        
         if user_information:
-            userId = user_information[0]['user_id']
+            user_id = user_information[0]['user_id']
             user_password = user_information[0]['password']
             email = user_information[0]['email']
             firstName = user_information[0]['first_name']
             lastName = user_information[0]['last_name']
+        else:
+            return Response({'error':Messages.PASSWORD_OR_EMAIL_INCORRECT}, status=status.HTTP_200_OK)
 
-        return Response({'error':Messages.PASSWORD_OR_EMAIL_INCORRECT}, status=status.HTTP_200_OK)
+
             
         # match the password, if same then continue
-        if passwordHashing.matchHashedPassword(userPassword,request.data['password']):
+        if passwordHashing.matchHashedPassword(user_password,request.data['password']):
 
-            token_data = access_refresh_token(userId,email,userType,firstName,lastName,userName,profilePic)
+            token_data = access_refresh_token(user_id)
 
             with transaction.atomic():
                 
@@ -115,13 +118,13 @@ def sign_in(request):
                 refresh_token=token_data['refresh_token'],
                 device_type = request.data['device_type'],
                 device_token=request.data['device_token'],
-                user_id=User.objects.get(user_id=user_info[0]['user_id'])
+                user_id=User.objects.get(user_id=user_information[0]['user_id'])
             )
 
                 data = {
-                    "user_id":user_info[0]['user_id'],
-                    "access_token": tokenData['access_token'],
-                    "refresh_token": tokenData['refresh_token']
+                    "user_id":user_information[0]['user_id'],
+                    "access_token": token_data['access_token'],
+                    "refresh_token": token_data['refresh_token']
                 }
 
                 return Response(data, status=status.HTTP_200_OK)
@@ -135,9 +138,9 @@ def access_refresh_token(user_id):
    
     try:
         # generate access token
-        access_token = JwtTokenHelper().JWTAccessToken(userInfo[0]['user_id'],rand_string)  # generate the access token
+        access_token = JwtTokenHelper().JWTAccessToken(user_id) 
         # generate refresh token
-        refresh_token = JwtTokenHelper().JWTRefreshToken(userInfo[0]['user_id'],rand_string)  # generate the refresh token
+        refresh_token = JwtTokenHelper().JWTRefreshToken(user_id)  
 
         data = {
             'access_token': access_token,
