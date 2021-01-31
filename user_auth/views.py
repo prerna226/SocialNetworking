@@ -72,7 +72,6 @@ def sign_up(request):
         return Response({'error':Messages.SOMETHING_WENT_WRONG}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 # This method is used for login
-@csrf_exempt
 @api_view(['POST'])
 def sign_in(request):
     try:
