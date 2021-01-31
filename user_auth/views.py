@@ -16,6 +16,7 @@ from cerberus import Validator
 from django.db.models import Q
 from django.db import transaction
 
+
 # This method is used for sign-up
 @api_view(['POST'])
 def sign_up(request):
