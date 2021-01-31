@@ -36,12 +36,10 @@ def sign_up(request):
     except Exception as e:
         return Response({'error':str(e)}, status=status.HTTP_400_BAD_REQUEST)
     try:
-
         # check if email exists
         if User.objects.filter(email=request.data['email'].lower()).exists():
             return Response({'error':Messages.EMAIL_EXISTS}, status=status.HTTP_200_OK)
         
-
         # Convert password into hash sha256
         hash_password = PasswordHashing().getHashedPassword(request.data['password'])  # Convert password into hash sha256
 
@@ -103,8 +101,6 @@ def sign_in(request):
         else:
             return Response({'error':Messages.PASSWORD_OR_EMAIL_INCORRECT}, status=status.HTTP_200_OK)
 
-
-            
         # match the password, if same then continue
         if passwordHashing.matchHashedPassword(user_password,request.data['password']):
 
