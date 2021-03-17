@@ -10,11 +10,10 @@ class Post(models.Model):
     user_posts_id = models.AutoField(primary_key=True)
     content = models.TextField(blank=True, null=True)
     media = JSONField()
-    total_like = models.IntegerField(default=False, null=True)
-    total_comment = models.IntegerField(default=False, null=True)
+    total_like = models.IntegerField(default=0, null=True)
+    total_comment = models.IntegerField(default=0, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     user_id = models.ForeignKey(User, db_column = 'user_id',related_name='user_post_user', on_delete=models.CASCADE)
-    updated_at = models.DateTimeField(auto_now_add=True)
     updated_by = models.ForeignKey(User, db_column = 'updated_by',related_name='user_post_updated', on_delete=models.CASCADE)
     is_deleted = models.BooleanField(default=0,null=False)
     

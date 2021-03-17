@@ -26,7 +26,7 @@ SECRET_KEY = '^-md75*kj!ti_&gver(ksf99%y4p@x$bvq7nzm8=bb@1g@cy&)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -52,7 +52,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'social_networking.urls'
+#This tells Django which Python module should be used as the URLconf for this Web site
+ROOT_URLCONF = 'social_networking.urls'  
 
 TEMPLATES = [
     {

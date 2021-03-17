@@ -4,10 +4,6 @@ from decouple import config
 
 
 class SqlQueryBuilder():
-    conn = mysql.connector.connect(
-        host=config('DATABASE_HOST'), user=config('DATABASE_USER'), passwd=config('DATABASE_PASSWORD'), database=config('DATABASE_NAME'))
-    cursor = conn.cursor()
-
     def __init__(self):
         try:
             self.conn =mysql.connector.connect(
